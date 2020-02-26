@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 
 import { Hero }         from '../hero';
 import { HeroService }  from '../hero.service';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-hero-detail',
@@ -33,8 +34,18 @@ export class HeroDetailComponent implements OnInit {
     this.location.back();
   }
 
- save(): void {
-    this.heroService.updateHero(this.hero)
+//  save(): void {
+//    setTimeout(() => {
+//       this.heroService.updateHero(this.hero)
+//       .subscribe(() => this.goBack());
+//    }, 250);
+//   }
+
+  save(): void {
+    let p = new Promise((resolve) => {
+     this.heroService.updateHero(this.hero)
       .subscribe(() => this.goBack());
+      resolve();
+    });
   }
 }
